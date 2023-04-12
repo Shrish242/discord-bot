@@ -1,6 +1,8 @@
 require('dotenv').config();
 const {Client , IntentsBitField, Message} = require('discord.js');
 
+const fetch = import('node-fetch').then((module) => module.default);
+
 const client = new Client({
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -27,6 +29,7 @@ client.on('messageCreate', (message) => {
     if (message.content === 'lado') {
       message.reply('Watch your language');
     }
+    
   });
   client.on('messageCreate', (message) => {
     console.log('Message received: ' + message.content);
@@ -55,7 +58,25 @@ else
 }
   }
 });
+async function getmsg(message){ 
+client.on('messageCreate', async (message) => {
+  console.log('Message received: ' + message.content);
+
+  if (message.content === '!gif'){ 
+    message.reply('gif!'); 
+    let url = `https://tenor.googleapis.com/v2/search?q=excited&key=${process.env.TENOR}&client_key=my_test_app&limit=8`
+    let reponse = await fetch(url);
+    let json = await reponse.json();
+    console.log(json);
   
+  
+  }
+});
+
+client.login(process.env.TOKEN);
+}
+
   
 client.login(process.env.TOKEN);
 
+getmsg()
